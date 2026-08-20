@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # Primary SQL Database: Holds your permanent historical master registries and facts ledger
+  postgres:
+    image: postgres:15-alpine
+    container_name: verifin-postgres
+    environment:
+      POSTGRES_USER: verifin_admin
+      POSTGRES_PASSWORD: SecretPassword123
+      POSTGRES_DB: verifin_ledger
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  # Memory Cache Tier: Sub-millisecond lookup cache for your Isolated Python Math Sandbox
+  redis-stack:
+    image: redis/redis-stack:latest
+    container_name: verifin-redis
+    ports:
+      - "6379:6379"  # Core Redis database port connection
+      - "8001:8001"  # RedisInsight Graphical Dashboard Interface
+    volumes:
+      - redis_data:/data
+    restart: always
+
+  # Neural Search Index: Houses narrative text chunks and your isolated dimension mapping indices
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: verifin-qdrant
+    ports:
+      - "6333:6333"  # Primary HTTP API communication port
+      - "6334:6334"  # GRPC interface endpoint connection
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: always
+
+volumes:
+  postgres_data:
+  redis_data:
+  qdrant_data:

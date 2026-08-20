@@ -1,0 +1,93 @@
+# =====================================================================
+# Project-Specific Exclusions (User Requested)
+# =====================================================================
+data/
+Notebooks/
+.ipynb_checkpoints/
+
+# =====================================================================
+# Environment, Credentials & Secrets
+# =====================================================================
+.env
+.env.*
+.env.local
+.env.development
+.env.production
+!.env.example
+
+# =====================================================================
+# Python Bytecode & Runtime Caches
+# =====================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# =====================================================================
+# Virtual Environments (uv / pip / virtualenv)
+# =====================================================================
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# =====================================================================
+# IDEs & Editor Configuration
+# =====================================================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# =====================================================================
+# Testing, Coverage & Profiling
+# =====================================================================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.pyre/
+.mypy_cache/
+.ruff_cache/
+
+# =====================================================================
+# OS Metadata
+# =====================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# =====================================================================
+# Log Files
+# =====================================================================
+*.log
+logs/

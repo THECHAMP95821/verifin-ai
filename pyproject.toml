@@ -1,0 +1,18 @@
+[project]
+name = "verifin-ai"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.19.1",
+    "asyncpg>=0.31.0",
+    "fastapi[standard]>=0.141.1",
+    "fastembed>=0.8.0",
+    "greenlet>=3.5.5",
+    "ipykernel>=7.3.0",
+    "logfire[asyncpg,fastapi,redis,sqlalchemy]>=4.40.0",
+    "pydantic-settings[dotenv]>=2.15.0",
+    "python-dotenv>=1.2.3",
+    "qdrant-client>=1.19.0",
+    "redis>=8.1.0",
+    "sqlalchemy>=2.0.52",
+]
