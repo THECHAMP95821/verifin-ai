@@ -2516,6 +2516,7 @@ dependencies = [
     { name = "qdrant-client" },
     { name = "redis" },
     { name = "sqlalchemy" },
+    { name = "tqdm" },
 ]
 
 [package.metadata]
@@ -2532,6 +2533,7 @@ requires-dist = [
     { name = "qdrant-client", specifier = ">=1.19.0" },
     { name = "redis", specifier = ">=8.1.0" },
     { name = "sqlalchemy", specifier = ">=2.0.52" },
+    { name = "tqdm", specifier = ">=4.70.0" },
 ]
 
 [[package]]

@@ -1,10 +1,11 @@
+import asyncio
+
+import logfire
 import requests
 
-from repositories.postgres.company_repo import CompanyRepo
 from src.core.postgres import AsyncSessionFactory, engine
-import asyncio
+from src.repositories.postgres.company_repo import CompanyRepo
 from src.scripts.script_runtime import run_script
-import logfire
 
 
 
@@ -38,7 +39,6 @@ async def run_pipeline():
         })
 
       with logfire.span("Postgres Bulk Upsert Operation"):
-        print(company_data)
         inserted_ciks = await company_repo.bulk_insert_ignore_duplicates( company_data)
         # await ctx.session.commit()
         print(f"\n================ VERIFICATION ================")

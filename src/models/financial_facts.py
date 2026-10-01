@@ -1,43 +1,27 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-from sqlalchemy import BigInteger, ForeignKey, Index, Integer, String, UniqueConstraint
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from decimal import Decimal
+
+from sqlalchemy import BigInteger, ForeignKey, Index, Integer, Numeric, String, Text, UniqueConstraint
+from sqlalchemy.orm import Mapped, mapped_column
 
 from .base import Base
-
-if TYPE_CHECKING:
-    from .company import Company
-    from .filings import Filings
-    from .standard_concepts import StandardConcepts
 
 
 class FinancialFacts(Base):
     __tablename__ = "financial_facts"
 
     __table_args__ = (
-        UniqueConstraint(
-            "cik",
-            "concept_key",
-            "period",
-            "dimension_member",
-            "filing_id",
-            name="uq_fact_coordinate",
-        ),
-        Index(
-            "idx_facts_sandbox_query",
-            "cik",
-            "concept_key",
-            "period",
-            "dimension_member",
-        ),
+        UniqueConstraint( "filing_id", "concept_id", "human_label", "dimension_member", "raw_concept",
+                          name="unique_cik_fiscal_year_period",
+                          postgresql_nulls_not_distinct=True),
+        Index("idx_facts_sandbox_query", "cik", "fiscal_year", "period", "concept_id"),
+        Index("idx_facts_filing_id", "filing_id", "concept_id"),
     )
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
-    concept_key: Mapped[str] = mapped_column(
-        String(255),
-        ForeignKey("standard_concepts.concept_key"),
-        nullable=False,
+    concept_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("standard_concepts.id"), nullable=False
     )
     cik: Mapped[str] = mapped_column(
         String(10),
@@ -49,25 +33,10 @@ class FinancialFacts(Base):
         ForeignKey("filings.id", ondelete="CASCADE"),
         nullable=False,
     )
-
+    raw_concept: Mapped[str | None] = mapped_column(String(255), nullable=True)
     statement_type: Mapped[str] = mapped_column(String(50), nullable=False)
     period: Mapped[str] = mapped_column(String(10), nullable=False)
-    dimension_member: Mapped[str] = mapped_column(String(255), nullable=False)
-    value_usd_integer: Mapped[int] = mapped_column(BigInteger, nullable=False)
-    decimals_exponent: Mapped[int] = mapped_column(Integer, nullable=False)
-    balance: Mapped[str] = mapped_column(String(10), nullable=False)
-    human_label: Mapped[str | None] = mapped_column(String(255), nullable=True)
-
-    # Relationships
-    concept: Mapped[StandardConcepts] = relationship(
-        "StandardConcepts",
-        back_populates="financial_facts",
-    )
-    company: Mapped[Company] = relationship(
-        "Company",
-        back_populates="financial_facts",
-    )
-    filing: Mapped[Filings] = relationship(
-        "Filings",
-        back_populates="financial_facts",
-    )
+    dimension_member: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    fiscal_year: Mapped[int] = mapped_column(Integer, nullable=False)
+    value: Mapped[Decimal] = mapped_column(Numeric(28, 4), nullable=False)
+    human_label: Mapped[str | None] = mapped_column(Text, nullable=True)
