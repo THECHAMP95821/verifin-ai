@@ -35,7 +35,7 @@ class Settings(BaseSettings):
 
     # Vector Collection Configuration
     COLLECTION_NAME: str = Field(default="sec_qualitative", min_length=1, max_length=64)
-    VECTOR_DIMENSION: int = Field(default=768, gt=0)
+    VECTOR_DIMENSION: int = Field(default=1024, gt=0)
 
     LOGFIRE_TOKEN: str
 

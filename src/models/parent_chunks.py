@@ -32,10 +32,6 @@ class ParentChunks(Base):
         nullable=False,
     )
 
-    chunk_index: Mapped[int] = mapped_column(
-        Integer, nullable=False, default=0
-    )
-
-    section_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    section_name: Mapped[str] = mapped_column(String(1000), nullable=False)
 
     text_content: Mapped[str] = mapped_column(Text, nullable=False)

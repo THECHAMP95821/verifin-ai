@@ -1,11 +1,13 @@
 from collections.abc import AsyncGenerator
+
+from qdrant_client import AsyncQdrantClient
 from sqlalchemy.ext.asyncio import AsyncSession
 from redis.asyncio import Redis
 # from qdrant_client import AsyncQdrantClient
 
 from src.core.postgres import AsyncSessionFactory
 from src.core.redis import redis_client
-# from src.core.qdrant import qdrant_client
+from src.core.qdrant import qdrant_client
 
 async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
     """
@@ -26,5 +28,5 @@ async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
 def get_redis_client() -> Redis:
     return redis_client
 
-# def get_qdrant_client() -> AsyncQdrantClient:
-#     return qdrant_client
+def get_qdrant_client() -> AsyncQdrantClient:
+    return qdrant_client
